@@ -21,6 +21,7 @@ export class UrlDirective implements OnInit {
   context: UrlContext;
 
   @Input('urlFrom') url: string;
+  @Input('urlMap') mapFn: any;
   @Input('urlLoadingComponent') loadingComponent: Type<any>;
 
   constructor(private template: TemplateRef<UrlContext>,
@@ -38,7 +39,7 @@ export class UrlDirective implements OnInit {
         response => {
           console.log(response);
           this.viewContainer.remove();
-          this.viewContainer.createEmbeddedView(this.template, { $implicit: response });
+          this.viewContainer.createEmbeddedView(this.template, { $implicit: this.mapFn(response) });
         },
         error => {
           this.viewContainer.remove();

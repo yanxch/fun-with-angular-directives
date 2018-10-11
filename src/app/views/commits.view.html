@@ -1,6 +1,5 @@
-
 <Route *params="let username=usernameParam">
-  <Fetch *url="let commits from commitsUrl(username)">
+  <Fetch *url="let commits from commitsUrl(username) map toCommits">
       <commit-list [commits]="commits"></commit-list>
   </Fetch>
 </Route>
