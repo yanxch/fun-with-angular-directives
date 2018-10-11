@@ -1,0 +1,20 @@
+<mat-list>
+    <mat-list-item *ngFor="let commit of commits">
+        <p matLine>
+            <span>
+                <mat-icon matListIcon>home</mat-icon>
+                {{commit.repo}}
+            </span> 
+        </p>
+        <p matLine>
+            <mat-icon matListIcon>face</mat-icon>
+            <span>{{commit.createdBy}} </span>
+        </p>
+        <p matLine>
+            <mat-icon matListIcon>message</mat-icon>
+            <span class="message">{{commit.message}} </span>
+        </p>
+        <mat-divider></mat-divider>
+
+    </mat-list-item>
+</mat-list>
