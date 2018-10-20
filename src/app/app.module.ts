@@ -2,20 +2,22 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatIconModule, MatListModule} from '@angular/material';
-import {RouterModule} from '@angular/router';
+import {RouterModule, Route} from '@angular/router';
 
 import {AppComponent} from './app.component';
 import {Fetch} from '../../lib/fetch/fetch.component';
-import {UrlDirective} from '../../lib/fetch/url.directive';
+import {FetchUrlDirective} from '../../lib/fetch/url.directive';
 import {LoadingComponent} from '../../lib/loading-spinner/loading-spinner.component';
 import {CommitListComponent} from './components/commitList/commitList.component';
 import {HttpClientModule} from '@angular/common/http';
 import {CommitsView} from './views/commits.view';
 import {RouteComponent} from '../../lib/router/route.component';
 import {ParamsDirective} from '../../lib/router/params.directive';
+import {PathDirective, RouterRenderComponent} from '../../lib/router/path.directive';
+import {UserView} from './components/user/user.component';
 
 
-const routes = [
+const routes: Route[] = [
     { path: 'commits/:usernameParam', component: CommitsView }
 ];
 
@@ -23,12 +25,15 @@ const routes = [
   declarations: [
     AppComponent,
     Fetch,
-    UrlDirective,
+    FetchUrlDirective,
     LoadingComponent,
     RouteComponent,
     ParamsDirective,
+    PathDirective,
+    RouterRenderComponent,
     CommitListComponent,
-    CommitsView
+    CommitsView,
+    UserView
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,6 @@ const routes = [
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [LoadingComponent]
+  entryComponents: [LoadingComponent, RouterRenderComponent]
 })
 export class AppModule { }

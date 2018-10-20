@@ -16,13 +16,13 @@ export type UrlContext = {
 @Directive({
   selector: '[url]'
 })
-export class UrlDirective implements OnInit {
+export class FetchUrlDirective implements OnInit {
 
   context: UrlContext;
 
   @Input('urlFrom') url: string;
   @Input('urlMap') mapFn: any;
-  @Input('urlLoadingComponent') loadingComponent: Type<any>;
+  @Input('urlLoadingComponent') loadingComponent: Type<any> = LoadingComponent;
 
   constructor(private template: TemplateRef<UrlContext>,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -31,7 +31,7 @@ export class UrlDirective implements OnInit {
 
   ngOnInit() {
     //Show LoadingComponent
-    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(LoadingComponent);
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.loadingComponent);
     this.viewContainer.createComponent(componentFactory);
 
     this.httpClient.get(this.url)

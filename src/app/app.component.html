@@ -1,1 +1,15 @@
+
+
 <router-outlet></router-outlet>
+
+<Route *path="'test'">
+  <h2>TEST LOL</h2>
+</Route>
+
+<Route *path="'hermann'">
+  <h2>Hermann LOL</h2>
+</Route>
+
+<Route *path="'foo/:usernameParam' let username=usernameParam">
+  <user-view [name]="username"></user-view>
+</Route>

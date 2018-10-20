@@ -1,6 +1,5 @@
-import {Directive, OnInit, Input, TemplateRef, ViewContainerRef} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {Directive, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 export type ParamsContext = {
   $implicit: any;
