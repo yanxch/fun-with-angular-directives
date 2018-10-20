@@ -1,0 +1,12 @@
+:host {
+    overflow: hidden;
+}
+
+:host .message {
+    white-space: pre-line;
+}
+
+:host .mat-list .mat-list-item {
+    display: block;
+    height: auto;
+}
