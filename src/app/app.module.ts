@@ -15,10 +15,13 @@ import {RouteComponent} from '../../lib/router/route.component';
 import {ParamsDirective} from '../../lib/router/params.directive';
 import {PathDirective, RouterRenderComponent} from '../../lib/router/path.directive';
 import {UserView} from './components/user/user.component';
+import {LetDirective} from '../../lib/let/let.directive';
+import {LetView} from './views/let.view';
 
 
 const routes: Route[] = [
-    { path: 'commits/:usernameParam', component: CommitsView }
+    { path: 'commits/:usernameParam', component: CommitsView },
+    { path: 'let', component: LetView }
 ];
 
 @NgModule({
@@ -33,7 +36,9 @@ const routes: Route[] = [
     RouterRenderComponent,
     CommitListComponent,
     CommitsView,
-    UserView
+    UserView,
+    LetDirective,
+    LetView
   ],
   imports: [
     BrowserModule,

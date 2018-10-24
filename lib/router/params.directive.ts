@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 
 export type ParamsContext = {
   $implicit: any;
-  [key: string]: any
+  [key: string]: any;
 };
 
 @Directive({
