@@ -1,0 +1,15 @@
+<ng-container *let="
+  let tasks=tasks 
+  let documents=documents 
+  let loading=loading 
+  from { 
+    tasks: tasks$ | async,  
+    documents: documents$ | async, 
+    loading: loading$ | async 
+  }">
+
+  <p>Tasks:</p> {{ tasks | json }}
+  <p>Documents:</p> {{ documents | json }}
+  <p>Loading:</p> {{ loading }}
+
+</ng-container>
