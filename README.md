@@ -13,7 +13,7 @@ Again: I just wanna have fun :)
 
 ## let
 
-As known from other existing projects like [ngrx-utils](https://github.com/ngrx-utils/ngrx-utils) this directives allows you to define template variables on more global scope within a template. This behaviour is already known from the core ngIf Directive, but can also finds usage without the need of condition.
+As known from other existing projects like [ngrx-utils](https://github.com/ngrx-utils/ngrx-utils) this directives allows you to define template variables on a more global scope within a template. This behaviour is already known from the core ngIf Directive, but can also find usage without the need of a condition.
 Merely it is used because you only want to subscribe once and you don't wanna manage the subscription in your component code.
 ```
 // let.view.html
