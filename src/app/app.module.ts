@@ -17,12 +17,24 @@ import {PathDirective, RouterRenderComponent} from '../../lib/router/path.direct
 import {UserView} from './components/user/user.component';
 import {LetDirective} from '../../lib/let/let.directive';
 import {LetView} from './views/let.view';
+import {Page} from '../../lib/let/page.component';
+import {StoreModule} from '@ngrx/store';
+import {counterReducer} from './state';
+import {CounterComponent} from './components/counter/counter.component';
+import {ReduxDirective} from '../../lib/connect/redux.directive';
+import {CounterView} from './views/counter.view';
+import {ConnectComponent} from '../../lib/connect/connect.component';
 
 
 const routes: Route[] = [
     { path: 'commits/:usernameParam', component: CommitsView },
-    { path: 'let', component: LetView }
+    { path: 'let', component: LetView },
+    { path: 'connect', component: CounterView }
 ];
+
+export interface AppState {
+  counter: number;
+}
 
 @NgModule({
   declarations: [
@@ -38,12 +50,18 @@ const routes: Route[] = [
     CommitsView,
     UserView,
     LetDirective,
-    LetView
+    LetView,
+    Page,
+    CounterComponent,
+    ConnectComponent,
+    ReduxDirective,
+    CounterView
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes, { useHash: true }),
+    StoreModule.forRoot({ counter: counterReducer}),
     HttpClientModule,
     MatButtonModule,
     MatIconModule,
