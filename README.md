@@ -98,6 +98,7 @@ Fetch allows to pass a map function, which takes the response and maps it to wha
 
 Connect to NGRX decaratively. 
 ```
+// counter.view.html
 <Connect *redux="let counter=counter
                  let incrementAction=incrementAction
                  let decrementAction=decrementAction
