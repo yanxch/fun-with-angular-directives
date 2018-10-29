@@ -1,27 +1,46 @@
-# AngularStarter
+# I just wanna have fun - Angular Structural Directives
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+This is just a fun project to show the power of structural directives. 
 
-## Development server
+In case you didn't noticed. I was slightly influenced by React Render-Children pattern. I don't chase after the React architecture but I tried to achive stuff the React community does simply better:
+- Containers Component, who should not have a templates, nor styles
+- Default OnPush
+- Clear Separation of concerns, meaning Page or View Components, which are effectively "dumb", but do not have a dependency to the state management library, http-client or router.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+I guess it's possible that every usecase could also be done with 'normal' directives, which would include `<ng-templates>..</ng-templates>`. Since structural directives hide this structure from us I decided to go with them.
 
-## Code scaffolding
+Again: I just wanna have fun :)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+##let
+As known from other existing projects like [ngrx-utils](https://github.com/ngrx-utils/ngrx-utils) this directives allows you to define template variables on more global scope within a template. This behaviour is already known from the core ngIf Directive, but can also finds usage without the need of condition.
+Merely it is used because you only want to subscribe once and you don't wanna manage the subscription in your component code.
+```
+// let.view.html
+<Page *let="
+  let tasks=tasks 
+  let documents=documents 
+  let loading=loading 
+  from { 
+    tasks: tasks$ | async,  
+    documents: documents$ | async, 
+    loading: loading$ | async 
+  }">
 
-## Build
+  <p>Tasks:</p> {{ tasks | json }}
+  <p>Documents:</p> {{ documents | json }}
+  <p>Loading:</p> {{ loading }}
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+</Page>
 
-## Running unit tests
+@Component({
+  selector: 'let-view',
+  templateUrl: 'let.view.html'
+})
+export class LetView {
+  tasks$ = of(['task1', 'task2']);
+  documents$ = of(['document1', 'document2']);
+  loading$ = of(true);
+}
+``` 
+The main difference to the already given solution of ngrx-utils is that internally the from object is spread into the context object of the strucural directive, which allows us to define the variables like `let task=task`and access their values directly.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
