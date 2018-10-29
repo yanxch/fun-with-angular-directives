@@ -11,7 +11,7 @@ I guess it's possible that every usecase could also be done with 'normal' direct
 
 Again: I just wanna have fun :)
 
-##let
+## let
 
 As known from other existing projects like [ngrx-utils](https://github.com/ngrx-utils/ngrx-utils) this directives allows you to define template variables on more global scope within a template. This behaviour is already known from the core ngIf Directive, but can also finds usage without the need of condition.
 Merely it is used because you only want to subscribe once and you don't wanna manage the subscription in your component code.
