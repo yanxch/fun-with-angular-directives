@@ -23,7 +23,9 @@
     "@angular/platform-browser": "6.1.9",
     "@angular/platform-browser-dynamic": "6.1.9",
     "@angular/router": "6.1.9",
+    "@ngrx/store": "^6.1.0",
     "core-js": "^2.4.1",
+    "redux": "^4.0.1",
     "rxjs": "^6.3.0",
     "zone.js": "^0.8.19"
   },
@@ -43,6 +45,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
+    "redux-devtools": "^3.4.1",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "2.9.2"

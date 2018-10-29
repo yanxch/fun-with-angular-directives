@@ -1,0 +1,20 @@
+<Connect *redux="let counter=counter
+                 let incrementAction=incrementAction
+                 let decrementAction=decrementAction
+                 let resetAction=resetAction
+                 mapSelectorToInput {
+                   counter: counterSelector
+                  }
+                 mapOutputToAction {
+                   incrementAction: incrementActionCreator,
+                   decrementAction: decrementActionCreator,
+                   resetAction: resetActionCreator
+                 }">
+
+  <counter [count]="counter | async"
+    (onIncrement)="incrementAction($event)"
+    (onDecrement)="decrementAction($event)"
+    (onReset)="resetAction($event)">
+  </counter>
+
+</Connect>
