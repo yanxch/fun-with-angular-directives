@@ -2,7 +2,7 @@
 
 This is just a fun project to show the power of structural directives. 
 
-In case you didn't noticed. I was slightly influenced by React Render-Children pattern. I don't chase after the React architecture but I tried to achive stuff the React community does simply better:
+In case you didn't notice. I was slightly influenced by React Render-Children pattern. I don't chase after the React architecture, but I tried to achieve stuff that the React community does simply better:
 - Containers Component, who should not have a templates, nor styles
 - Default OnPush
 - Clear Separation of concerns, meaning Page or View Components, which are effectively "dumb", but do not have a dependency to the state management library, http-client or router.
