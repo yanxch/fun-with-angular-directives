@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'counter',
@@ -8,10 +8,11 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
     <button (click)="decrement()">Decrement</button>
     <button (click)="reset()">Reset Counter</button>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CounterComponent {
   @Input()
-  count: number;
+  count: number = 666;
 
   @Output()
   onIncrement = new EventEmitter<any>();
@@ -21,6 +22,10 @@ export class CounterComponent {
   onReset = new EventEmitter<any>();
 
   constructor() {
+  }
+
+  ngDoCheck() {
+    console.log('CounterComponent Check Stuff');
   }
 
   increment() {

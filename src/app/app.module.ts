@@ -24,12 +24,21 @@ import {CounterComponent} from './components/counter/counter.component';
 import {ReduxDirective} from '../../lib/connect/redux.directive';
 import {CounterView} from './views/counter.view';
 import {ConnectComponent} from '../../lib/connect/connect.component';
+import {CommitsContainer} from './container/commits.container';
+import {CommitsService} from './api/commits/commits.service';
+import {CommitsNormalView} from './views/commits-normal.view';
+import {LetViewContainer} from './views/letView.container';
+import {CounterContainer} from './views/counter.container';
+import {LetComponent} from './components/let/let.component';
+import {LetView2Container} from './views/letView2.container';
 
 
 const routes: Route[] = [
     { path: 'commits/:usernameParam', component: CommitsView },
-    { path: 'let', component: LetView },
-    { path: 'connect', component: CounterView }
+    { path: 'let', component: LetViewContainer },
+    { path: 'let2', component: LetView2Container},
+    { path: 'connect', component: CounterView },
+    { path: 'commits-normal/:username', component: CommitsNormalView}
 ];
 
 export interface AppState {
@@ -55,7 +64,13 @@ export interface AppState {
     CounterComponent,
     ConnectComponent,
     ReduxDirective,
-    CounterView
+    CounterView,
+    CommitsContainer,
+    CommitsNormalView,
+    LetViewContainer,
+    CounterContainer,
+    LetComponent,
+    LetView2Container
   ],
   imports: [
     BrowserModule,
@@ -67,7 +82,9 @@ export interface AppState {
     MatIconModule,
     MatListModule
   ],
-  providers: [],
+  providers: [
+    CommitsService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [LoadingComponent, RouterRenderComponent]
 })

@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Commit} from '../components/commitList/commit';
+import {toCommits} from '../api/commits/commits.service';
 
 @Component({
   selector: 'commits-view',
@@ -15,17 +16,3 @@ export class CommitsView {
   }
 }
 
-// Pure functions --> easy to test
-const isPushEvent = (entry) => entry.type === 'PushEvent';
-
-const toCommits = (response: any[]) => 
-  response
-    .filter(isPushEvent)
-    .reduce((commits, pushEvent) => // [[Commit, Commit], [Commit, Commit, Commit]] => [Commit, Commit, Commit, Commit, Commit]
-    commits.concat(pushEvent.payload.commits.map(commit => 
-        new Commit(commit.sha, 
-            pushEvent.repo.name, 
-            commit.author.name, 
-            commit.message))
-        )    
-    , []);

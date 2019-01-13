@@ -1,12 +1,20 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
-import {of, Subject, BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, of} from 'rxjs';
 
 @Component({
-  selector: 'let-view',
-  templateUrl: 'let.view.html',
+  selector: 'let-view-container-2',
+  template: `
+    <let-component
+      [tasks]="tasks$ | async"
+      [documents]="documents$ | async"
+      [loading]="loading$ | async">
+    </let-component>
+    <counter-container></counter-container>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LetView {
+export class LetView2Container {
+
   _tasks$ = new BehaviorSubject('task1');
 
 
@@ -21,6 +29,6 @@ export class LetView {
   }
 
   ngDoCheck() {
-    console.log('LetView Check Stuff');
+    console.log('LetView2Container Check Stuff');
   }
 }
