@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {LetDirective} from '../../lib/let/let.directive';
 import {createHostComponentFactory, SpectatorWithHost} from '@netbasal/spectator';
 import {of} from 'rxjs';
+import {By} from '@angular/platform-browser';
 
 @Component({ selector: 'custom-host', template: '' })
 class CustomHostComponent {
@@ -25,8 +26,11 @@ describe('Let Directive', function () {
         }">
         <p>Tasks: {{ task }}</p> 
       </div>
-    `, false);
-​    
-    expect(host.query('p')).toHaveText('Tasks: First Task');
+    `);
+    
+    host.detectChanges();
+    
+​    const element = host.hostDebugElement.query(By.css('p'))
+    expect(element.nativeElement).toHaveText('Tasks: First Task');
   });
 });
