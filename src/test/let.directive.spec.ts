@@ -1,12 +1,18 @@
 import {Component} from '@angular/core';
 import {LetDirective} from '../../lib/let/let.directive';
 import {createHostComponentFactory, SpectatorWithHost} from '@netbasal/spectator';
-import {of} from 'rxjs';
+import {of, BehaviorSubject} from 'rxjs';
 import {By} from '@angular/platform-browser';
+import {tick, fakeAsync} from '@angular/core/testing';
 
 @Component({ selector: 'custom-host', template: '' })
 class CustomHostComponent {
-  task$ = of('First Task');
+  taskSubject = new BehaviorSubject('First Task');
+  task$ = this.taskSubject.asObservable();
+
+  constructor() {
+    setTimeout(() => this.taskSubject.next('Second Task'), 900);
+  }
 }
 ​
 describe('Let Directive', function () {
@@ -17,7 +23,9 @@ describe('Let Directive', function () {
     host: CustomHostComponent
   });
 ​
-  it('binds Task Observable to the context', () => {
+  it('binds the Template Variable to "First Task"', () => {
+    // 
+    // Given
     host = createHost(`
       <div class="test" *let="
         let task=task 
@@ -27,10 +35,32 @@ describe('Let Directive', function () {
         <p>Tasks: {{ task }}</p> 
       </div>
     `);
-    
+    //
+    // When
     host.detectChanges();
-    
-​    const element = host.hostDebugElement.query(By.css('p'))
-    expect(element.nativeElement).toHaveText('Tasks: First Task');
+    // Then
+​    const p = host.hostDebugElement.query(By.css('p')).nativeElement;
+    expect(p).toHaveText('Tasks: First Task');
   });
+
+  it('updates the Template Variable to "Second Task" after one second', fakeAsync(() => {
+    // 
+    // Given
+    host = createHost(`
+      <div class="test" *let="
+        let task=task 
+        from { 
+          task: task$ | async 
+        }">
+        <p>Tasks: {{ task }}</p> 
+      </div>
+    `);
+    //
+    // When
+    tick(1000);
+    host.detectChanges();
+    // Then
+​    const p = host.hostDebugElement.query(By.css('p')).nativeElement;
+    expect(p).toHaveText('Tasks: Second Task');
+  }));
 });
