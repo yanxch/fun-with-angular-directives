@@ -1,5 +1,8 @@
 <Route *params="let username=usernameParam">
-  <Fetch *url="let commits from commitsUrl(username) map toCommits">
+{{username}}
+  <!--Fetch *url="let commits from commitsUrl(username) map toCommits"-->
+    <commits-container [username]="username">
       <commit-list [commits]="commits"></commit-list>
-  </Fetch>
+    </commits-container>
+  <!--/Fetch-->
 </Route>

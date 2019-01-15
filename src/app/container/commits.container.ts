@@ -1,5 +1,5 @@
 import {CommitsService} from '../api/commits/commits.service';
-import {OnInit, Input, Component} from '@angular/core';
+import {OnInit, Input, Component, SimpleChanges} from '@angular/core';
 import {Commit} from '../components/commitList/commit';
 import {Observable} from 'rxjs';
 
@@ -18,7 +18,12 @@ export class CommitsContainer implements OnInit {
   constructor(private commitsApi: CommitsService) {}
 
   ngOnInit() {
-    this.commits$ = this.loadCommits(this.username);
+  }
+  
+  ngOnChanges({ username }: SimpleChanges) {
+    if (username.currentValue) {
+      this.commits$ = this.loadCommits(username.currentValue);
+    }
   }
 
   private loadCommits(username: string) {

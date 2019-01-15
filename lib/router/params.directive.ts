@@ -1,30 +1,28 @@
 import {Directive, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
-export type ParamsContext = {
+export class ParamsContext {
   $implicit: any;
   [key: string]: any;
-};
+}
 
 @Directive({
   selector: '[params]'
 })
 export class ParamsDirective implements OnInit {
 
-  context: ParamsContext;
+  context = new ParamsContext();
 
   constructor(private template: TemplateRef<ParamsContext>,
               private viewContainer: ViewContainerRef,
               private route: ActivatedRoute) {}
 
   ngOnInit() {
+    console.log('Create new View');
+    this.viewContainer.createEmbeddedView(this.template, this.context);
     this.route.paramMap
       .subscribe((paramMap: any) => {
-        this.viewContainer.clear();
-        this.viewContainer.createEmbeddedView(this.template, { 
-          $implicit: paramMap.params,
-          ...paramMap.params
-        }); 
+        Object.assign(this.context, paramMap.params);
       });
   }
 }
