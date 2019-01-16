@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 
 @Component({
   selector: 'commits-container',
-  templateUrl: 'commits.container.html'
+  template: '<ng-content></ng-content>'
   // no styles in containers please :)                  
 })
 export class CommitsContainer implements OnInit {

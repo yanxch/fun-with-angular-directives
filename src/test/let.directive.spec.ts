@@ -6,7 +6,7 @@ import {By} from '@angular/platform-browser';
 import {tick, fakeAsync} from '@angular/core/testing';
 
 @Component({ selector: 'custom-host', template: '' })
-class CustomHostComponent {
+class LetDirectiveHost {
   taskSubject = new BehaviorSubject('First Task');
   task$ = this.taskSubject.asObservable();
 
@@ -16,11 +16,11 @@ class CustomHostComponent {
 }
 ​
 describe('Let Directive', function () {
-  let host: SpectatorWithHost<LetDirective, CustomHostComponent>;
+  let host: SpectatorWithHost<LetDirective, LetDirectiveHost>;
 ​
   const createHost = createHostComponentFactory({
     component: LetDirective,
-    host: CustomHostComponent
+    host: LetDirectiveHost
   });
 ​
   it('binds the Template Variable to "First Task"', () => {
@@ -47,7 +47,7 @@ describe('Let Directive', function () {
     // 
     // Given
     host = createHost(`
-      <div class="test" *let="
+      <div *let="
         let task=task 
         from { 
           task: task$ | async 
@@ -59,6 +59,7 @@ describe('Let Directive', function () {
     // When
     tick(1000);
     host.detectChanges();
+    //
     // Then
 ​    const p = host.hostDebugElement.query(By.css('p')).nativeElement;
     expect(p).toHaveText('Tasks: Second Task');
