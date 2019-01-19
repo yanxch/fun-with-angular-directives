@@ -4,15 +4,11 @@ import {SpectatorWithHost, createHostComponentFactory} from '@netbasal/spectator
 import {ParamsDirective} from '../../lib/router/params.directive';
 import {By} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
+import {tick, fakeAsync} from '@angular/core/testing';
 
 @Component({ selector: 'custom-host', template: '' })
 class ParamsDirectiveHost {
-  taskSubject = new BehaviorSubject('First Task');
-  task$ = this.taskSubject.asObservable();
-
-  constructor() {
-    setTimeout(() => this.taskSubject.next('Second Task'), 900);
-  }
+  constructor() {}
 }
 
 class MockedActivatedRoute {
@@ -24,7 +20,16 @@ class MockedActivatedRoute {
     }
   });
 
-  constructor() {}
+  constructor() {
+    setTimeout(() => {
+      this.paramMap.next({
+        params: {
+          usernameParam: 'New Value',
+          xxxParam: 'testValue2'
+        }
+      })
+    }, 900);
+  }
 }
 
 describe('Params Directive', function () {
@@ -54,4 +59,22 @@ describe('Params Directive', function () {
     const p = host.hostDebugElement.query(By.css('p')).nativeElement;
     expect(p).toHaveText('Route Param: testValue');
   });
+
+  it('updates the Template Variable to "Test Value 2"', fakeAsync(() => {
+    // 
+    // Given
+    host = createHost(`
+      <div *params="let username=usernameParam">
+        <p>Route Param: {{username}}</p> 
+      </div>
+    `);
+    //
+    // When
+    tick(1000);
+    host.detectChanges();
+    //
+    // Then
+    const p = host.hostDebugElement.query(By.css('p')).nativeElement;
+    expect(p).toHaveText('Route Param: New Value');
+  }));
 });
