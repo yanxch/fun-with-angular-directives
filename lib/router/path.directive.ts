@@ -1,44 +1,41 @@
-import {ComponentFactoryResolver, Directive, OnInit, TemplateRef, ViewContainerRef, Component, ViewChild, Input, Type} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, Directive, Input, OnInit, TemplateRef, Type, ViewChild, ViewContainerRef} from '@angular/core';
+import {ActivatedRoute, Router, Route} from '@angular/router';
 import {take} from 'rxjs/operators';
 
-export type PathContext = {
-  $implicit: any;
-};
+export class RouteContext {
+  [key: string]: any;
+}
 
 @Directive({
   selector: '[path]'
 })
-export class PathDirective implements OnInit {
+export class RouteDirective implements OnInit {
 
   @Input('path') path: string;
 
-  constructor(private template: TemplateRef<PathContext>,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private viewContainer: ViewContainerRef,
+  @Input('pathMatch') match: string;
+  @Input('pathOutlet') outlet: string; 
+
+  constructor(private template: TemplateRef<RouteContext>,
     private router: Router) {}
 
   ngOnInit() {
-    this.router.config.push({
+    const config: Route = {
       path: this.path,
       component: RouterRenderComponent,
       data: { template: this.template }
-    });
+    };
+
+    if (this.match) {
+      config.pathMatch = this.match;
+    }
+
+    if (this.outlet) {
+      config.outlet = this.outlet;
+    }
+
+    this.router.config.push(config);
   }
-}
-
-export function RouterComponentFactory(template, context, component: Type<RouterRenderComponent>): Type<RouterRenderComponent> {
-  return class extends component {
-
-    constructor() {
-      super(template, context);
-    }
-
-    ngOnInit() {
-      super.ngOnInit();
-    }
-
-  };
 }
 
 @Component({
@@ -49,25 +46,21 @@ export function RouterComponentFactory(template, context, component: Type<Router
 })
 export class RouterRenderComponent implements OnInit {
 
+    context = new RouteContext();
+
     @ViewChild('container', {read: ViewContainerRef}) container: ViewContainerRef;
 
     private template: TemplateRef<any>;
 
-    constructor(private route: ActivatedRoute) {
-    }
-
+    constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
       this.route.data.pipe(take(1)).subscribe(data => this.template = data.template);
+      this.container.createEmbeddedView(this.template, this.context);
 
       this.route.paramMap
         .subscribe((paramMap: any) => {
-          this.container.clear();
-          this.container.createEmbeddedView(this.template, { 
-            $implicit: paramMap.params,
-            ...paramMap.params
-          }); 
+          Object.assign(this.context, paramMap.params);
         });
-
     }
 }

@@ -18,7 +18,6 @@ export class ParamsDirective implements OnInit {
               private route: ActivatedRoute) {}
 
   ngOnInit() {
-    console.log('Create new View');
     this.viewContainer.createEmbeddedView(this.template, this.context);
     this.route.paramMap
       .subscribe((paramMap: any) => {

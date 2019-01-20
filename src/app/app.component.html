@@ -11,5 +11,8 @@
 </Route>
 
 <Route *path="'foo/:usernameParam' let username=usernameParam">
-  <user-view [name]="username"></user-view>
+  <!--user-view [name]="username"></user-view-->
+  <commits-container [username]="username" #cc>
+    <commit-list [commits]="cc.commits$ | async"></commit-list>
+  </commits-container>
 </Route>
