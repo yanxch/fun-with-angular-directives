@@ -1,6 +1,6 @@
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatIconModule, MatListModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatListModule, MatCardModule} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Route, RouterModule} from '@angular/router';
@@ -30,6 +30,7 @@ import {CounterView} from './views/counter.view';
 import {LetView} from './views/let.view';
 import {LetViewContainer} from './views/letView.container';
 import {LetView2Container} from './views/letView2.container';
+import {CardComponent} from './components/card/card.component';
 
 
 
@@ -70,7 +71,8 @@ export interface AppState {
     LetViewContainer,
     CounterContainer,
     LetComponent,
-    LetView2Container
+    LetView2Container,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -79,6 +81,7 @@ export interface AppState {
     StoreModule.forRoot({ counter: counterReducer}),
     HttpClientModule,
     MatButtonModule,
+    MatCardModule,
     MatIconModule,
     MatListModule
   ],
