@@ -31,15 +31,15 @@ import {LetView} from './views/let.view';
 import {LetViewContainer} from './views/letView.container';
 import {LetView2Container} from './views/letView2.container';
 import {CardComponent} from './components/card/card.component';
-
-
+import {CommitsViewWithFetch} from './views/commits.view-with-fetch';
 
 const routes: Route[] = [
     { path: 'commits/:usernameParam', component: CommitsView },
     { path: 'let', component: LetViewContainer },
     { path: 'let2', component: LetView2Container},
     { path: 'connect', component: CounterView },
-    { path: 'commits-normal/:username', component: CommitsNormalView}
+    { path: 'commits-normal/:username', component: CommitsNormalView},
+    { path: 'commits-fetch/:usernameParam', component: CommitsViewWithFetch}
 ];
 
 export interface AppState {
@@ -72,7 +72,8 @@ export interface AppState {
     CounterContainer,
     LetComponent,
     LetView2Container,
-    CardComponent
+    CardComponent,
+    CommitsViewWithFetch
   ],
   imports: [
     BrowserModule,
