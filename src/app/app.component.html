@@ -15,4 +15,7 @@
   <commits-container [username]="username" #cc>
     <commit-list [commits]="cc.commits$ | async"></commit-list>
   </commits-container>
+  <Route *path="'foo-child'">
+    <p>Child Route Test</p>
+  </Route>
 </Route>

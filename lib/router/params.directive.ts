@@ -1,17 +1,19 @@
-import {Directive, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
+import {Directive, OnInit, TemplateRef, ViewContainerRef, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 export class ParamsContext {
-  $implicit: any;
   [key: string]: any;
 }
 
 @Directive({
   selector: '[params]'
 })
-export class ParamsDirective implements OnInit {
+export class ParamsDirective implements OnInit, OnDestroy {
 
   context = new ParamsContext();
+
+  private _routeParamsSubscription: Subscription;
 
   constructor(private template: TemplateRef<ParamsContext>,
               private viewContainer: ViewContainerRef,
@@ -19,9 +21,15 @@ export class ParamsDirective implements OnInit {
 
   ngOnInit() {
     this.viewContainer.createEmbeddedView(this.template, this.context);
-    this.route.paramMap
-      .subscribe((paramMap: any) => {
-        Object.assign(this.context, paramMap.params);
-      });
+    this._routeParamsSubscription = this.route
+      .paramMap
+      .subscribe((paramMap: any) => 
+        // Copy all route params on the context
+        Object.assign(this.context, paramMap.params)
+      );
+  }
+
+  ngOnDestroy() {
+    this._routeParamsSubscription.unsubscribe();
   }
 }

@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Route} from '@angular/router';
 
 @Component({
   selector: 'Route',
@@ -7,5 +8,5 @@ import {Component} from '@angular/core';
   `
 })
 export class RouteComponent {
-
+  config: Route;
 }

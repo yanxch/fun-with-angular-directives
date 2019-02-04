@@ -39,7 +39,6 @@ export class ReduxDirective implements OnInit, OnDestroy {
           this.outputs[key] = this.bindAction(this.outputs[key]);
         });
 
-      this.viewContainer.clear();
       this.viewContainer.createEmbeddedView(this.template, { 
         $implicit: null,
         ...this.inputs,
@@ -47,9 +46,7 @@ export class ReduxDirective implements OnInit, OnDestroy {
       }); 
   }
 
-  ngOnDestroy() {
-
-  }
+  ngOnDestroy() {}
 
   select(selector) {
     return this.store.select(selector);

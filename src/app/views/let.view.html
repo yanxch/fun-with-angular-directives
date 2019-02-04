@@ -1,4 +1,4 @@
-<Page *let="
+<div *let="
   let tasks=tasks 
   let documents=documents 
   let loading=loading 
@@ -8,9 +8,14 @@
     loading: loading$ | async 
   }">
 
-  <p>Tasks:</p> {{ tasks | json }}
-  <p>Documents:</p> {{ documents | json }}
-  <p>Loading:</p> {{ loading }}
+  <!--task-widget [tasks]="tasks"></task-widget>
+  <document-widget [documents]="documents"></document-widget>
+  
+  <loading-state [laoding]="loading">
+    Loading....
+  </loading-state>
 
+  <task-list [tasks]="tasks"></task-list>
+  <documents-list [documents]="documents"></documents-list-->
 
-</Page>
+</div>

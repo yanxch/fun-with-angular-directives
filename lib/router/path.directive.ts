@@ -1,6 +1,7 @@
-import {Component, Directive, Input, OnInit, TemplateRef, Type, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, Directive, Input, OnInit, TemplateRef, Type, ViewChild, ViewContainerRef, Optional, SkipSelf, Self, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router, Route} from '@angular/router';
 import {take} from 'rxjs/operators';
+import {RouteComponent} from './route.component';
 
 export class RouteContext {
   [key: string]: any;
@@ -16,25 +17,33 @@ export class RouteDirective implements OnInit {
   @Input('pathMatch') match: string;
   @Input('pathOutlet') outlet: string; 
 
+  config: Route;
+
   constructor(private template: TemplateRef<RouteContext>,
-    private router: Router) {}
+              private router: Router,
+              @SkipSelf() @Optional() private parent: RouteComponent) {}
 
   ngOnInit() {
-    const config: Route = {
+    if (this.parent) {
+      console.log('Found a RouteDirective Parent. I am a child!');
+      console.log('I should add my configuration as children');
+    }
+    this.config = {
       path: this.path,
       component: RouterRenderComponent,
       data: { template: this.template }
     };
 
     if (this.match) {
-      config.pathMatch = this.match;
+      this.config.pathMatch = this.match;
     }
 
     if (this.outlet) {
-      config.outlet = this.outlet;
+      this.config.outlet = this.outlet;
     }
 
-    this.router.config.push(config);
+    this.router.config.push(this.config);
+  
   }
 }
 
